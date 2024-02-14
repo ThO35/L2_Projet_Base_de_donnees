@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    p {
+      font-size : 150%;
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+      margin-top:1em; 
+      margin-bottom:1em; 
+      margin-left:2em; 
+      margin-right:2em;
+    }
+
+    
+    a {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    a:visited {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    a.nounderline {
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+      color :rgb(248, 235, 209);
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 15%;
+      background-color: grey;
+      float: left;
+      height: 100%;
+      overflow: auto;
+    }
+
+    li a {
+      display: block;
+      color: rgb(248, 235, 209);
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    li a.active {
+      background-color: #83431d;
+      color: rgb(248, 235, 209);
+    }
+
+    li a:hover:not(.active) {
+      background-color: #b75e29;
+      color: rgb(248, 235, 209);;
+    }
+
+    /* Ajout d'un style pour le conteneur principal */
+    .main-content {
+      padding: 1px 16px;
+      height: 100%;
+      box-sizing: border-box; /* Ajout de cette propriété pour inclure le padding dans la hauteur */
+    }
+    
+  </style>
+  
+  <script>
+    function toggleReadOnly(elementId) {
+      var element = document.getElementById(elementId);
+      element.readOnly = !element.readOnly;
+    }
+  </script>
+  
+  <title>Nuage - Compte</title>
+</head>
+
+<body style="background-color: #2b7e82;">
+
+  <header style = "display:flex; align-items:center; justify-content:space-between; height:9em; margin-top:1.5em; margin-bottom:3em; margin-right:2em;">
+
+    <a href="/" style = "height:100%;"><img src = "{{url_for('static', filename = 'logo.png')}}" style = "height : 100%;" alt = "Logo Nuage"></a>
+    <a href="/"><h1 style="font-size:500%; display:inline; color:black;">NUAGE</h1></a>
+    <a href="/compte" style = "text-decoration:none; font-size:300%;">PROFIL</a>
+  </header>
+
+  
+
+  <div class="main-content">
+    <ul>
+      <li><a class="active" href="/home">Home</a></li>
+      <li><a href="/profil">Profil</a></li>
+      <li><a href="/bibliotheque">Vos Jeux</a></li>
+      <li><a href="/partage">Partage</a></li>
+      <li><a href="/state">Statistique</a></li>
+      <li><a href="/commente">Notation Jeux</a></li>
+      <li><a href="/gestion_payement">Gestion payement</a></li>
+      <li><a href="/ami"> Vos amis</a></li>
+      <li><a href="deconnexion">Se déconnecter</a></li>
+    </ul>
+
+
+    <div style = "margin-left:17%;">
+    <form method="post" action="{{ url_for('profil_modification') }}" >
+
+      <p>
+        <label for="new_pseudo"> Pseudo:</label><br>
+        <input type="text" id="new_pseudo" name="new_pseudo" value="{{joueur_info[0]}}" required readonly>
+        <button type="button" onclick="toggleReadOnly('new_pseudo')">Modifier</button>
+        <br>
+  
+        <label for="new_nom"> Nom:</label><br>
+        <input type="text" id="new_nom" name="new_nom" value="{{joueur_info[1]}}"required readonly>
+        <button type="button" onclick="toggleReadOnly('new_nom')">Modifier</button>
+        <br>
+  
+        <label for="new_email">Email:</label><br>
+        <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" id="new_email" name="new_email" value="{{joueur_info[2]}}"  required readonly>
+        <button type="button" onclick="toggleReadOnly('new_email')">Modifier</button>
+
+
+        <br>
+  
+        <label for="new_date_naissance">Date de naissance:</label><br>
+        <input type="date" id="new_date_naissance" name="new_date_naissance" value="{{joueur_info[3]}}" max="{{datemin}}"  min="{{datemax}}"  required readonly>
+        <button type="button" onclick="toggleReadOnly('new_date_naissance')">Modifier</button>
+        <br>
+        <label for="new_mot_de_pass">Mot de passe:</label><br>
+        <input type="password" id="new_mot_de_pass" name="motdepasse" value= "None"pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/" title="Le mot de passe doit contenir au moins 12 caractères, une minuscule, une majuscule, un chiffre et un caractère spécial" placeholder="Nouveau mot_de_pass" minlength="12" readonly>
+        <button type="button" onclick="toggleReadOnly('new_mot_de_pass')">Modifier</button>
+        <br>
+      </p>
+      <p><input type="submit" value="Valider"></p>
+    </form>
+    </div>
+  </div>
+  
+
+</body>
+</html>

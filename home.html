@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+   a {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    a:visited {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    a.nounderline {
+      text-decoration: none;
+      color :rgb(248, 235, 209);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 15%;
+      background-color: grey;
+      float: left;
+      height: 100%;
+      overflow: auto;
+    }
+
+    li a {
+      display: block;
+      color: rgb(248, 235, 209);
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    li a.active {
+      background-color: #83431d;
+      color: rgb(248, 235, 209);
+    }
+
+    li a:hover:not(.active) {
+      background-color: #b75e29;
+      color: white;
+    }
+
+    .main-content {
+      padding: 1px 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap; /* Ajout de flex-wrap: wrap; */
+      justify-content: space-around; /* Ajout de justify-content: space-around; pour l'espacement automatique */
+    }
+    
+    .game-container {
+      width: 300px;
+      height: 400px;
+      margin: 10px;
+      border: 1px solid #b75e29;
+      text-align: center;
+      background-color: rgb(30, 30, 37);
+      display: flex;
+      flex-direction: column;
+    }
+
+</style>
+
+  <title>Nuage - Home</title>
+
+</head>
+
+<body style="background-color:#2b7e82;">
+
+  <header style = "display:flex; align-items:center; justify-content:space-between; height:9em; margin-top:1.5em; margin-bottom:3em; 
+      margin-left:2em; margin-right:2em;">
+    <a href="/" style = "height:100%;"><img src = "{{url_for('static', filename = 'logo.png')}}" style = "height : 100%;" alt = "Logo Nuage"></a>
+    <a href="/"><h1 style="font-size:500%; display:inline; color:black;">NUAGE</h1></a>
+    <a href="/compte" style = "text-decoration:none; font-size:300%;">PROFIL</a>
+  </header>
+
+  <nav style="display:flex; justify-content:center; align-items:center; background-color:#b75e29; height:2em; font-size:150%; 
+      margin-bottom:2em; margin-left:2em; margin-right:2em; border: 2px solid black;">
+    <a href="/compte">PROFIL</a>&ensp;
+    <a href="/">BOUTIQUE</a>&ensp;
+    <a href="/recherche">RECHERCHE</a> &ensp;
+  </nav>
+
+  <div style = "display:flex; align-items:center; justify-content:space-between; margin-bottom:2em; 
+  margin-left:2em; margin-right:2em; border-top : 1px solid black; border-bottom : 1px solid black;">
+
+  <a href="/boutique_date_recente">Tri par date (récent => ancien)</a> &ensp;</a>
+  <a href="/boutique_date_ancienne">Tri par date (ancien => récent)</a> &ensp;</a>
+  <a href="/boutique_plus_vente">Tri par nombre de ventes (€€€ => €)</a> &ensp;</a>
+  <a href="/boutique_moins_vente">Tri par nombre de ventes (€ => €€€)</a> &ensp;</a>
+  <a href="/boutique_moins_bonne_note">Tri par moyenne (meilleure => pire)</a> &ensp;</a>
+  <a href="/boutique_bonne_note">Tri par moyenne (pire => meilleure)</a> &ensp;</a>
+  <a href="/home">Tri par identfiant du jeu</a> &ensp;</a>
+  </div>
+
+  <div style="display:flex; justify-content:center; flex-wrap:wrap;">
+    {% for onejeu in jeu %}
+    <a href="{{ url_for('display_jeux', thisjeu=onejeu.titre) }}" class="nounderline">
+      <div style="width:300px; height:400px; margin:10px; border:1px solid #b75e29; text-align:center; background-color:rgb(30, 30, 37);">
+        <h2>{{ onejeu.titre }}</h2>
+        <img src="{{ url_for('static', filename=onejeu.titre + '.jpg') }}" alt="{{ onejeu.titre }}" class="center">
+        <p>{{ description[loop.index0].description }}</p>
+        
+        <p>{{prix[loop.index0].prix}} €</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</body>
+</html>

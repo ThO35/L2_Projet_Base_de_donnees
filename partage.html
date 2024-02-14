@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    a {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    a:visited {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+    
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    a.nounderline {
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 15%;
+      background-color: grey;
+      float: left;
+      height: 100%;
+      overflow: auto;
+    }
+
+    li a {
+      display: block;
+      color: rgb(248, 235, 209);
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    li a.active {
+      background-color: #83431d;
+      color: rgb(248, 235, 209);
+    }
+
+    li a:hover:not(.active) {
+      background-color: #b75e29;
+      color: rgb(248, 235, 209);
+    }
+
+    .main-content {
+      margin-left: 15%;
+      padding: 1px 16px;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .game-container {
+      width: 300px;
+      height: 400px;
+      margin: 10px;
+      border: 1px solid #b75e29;
+      text-align: center;
+      background-color: rgb(30, 30, 37);
+      display: flex;
+      flex-direction: column;
+    }
+
+  </style>
+  <title>Nuage - Partage</title>
+</head>
+
+<body style="background-color: #2b7e82;">
+
+  <header style = "display:flex; align-items:center; justify-content:space-between; height:9em; margin-top:1.5em; margin-bottom:3em; margin-right:2em;">
+
+    <a href="/" style = "height:100%;"><img src = "{{url_for('static', filename = 'logo.png')}}" style = "height : 100%;" alt = "Logo Nuage"></a>
+    <a href="/"><h1 style="font-size:500%; display:inline; color:black;">NUAGE</h1></a>
+    <a href="/compte" style = "text-decoration:none; font-size:300%;">PROFIL</a>
+  </header>
+
+  <ul>
+    <li><a class="active" href="/home">Home</a></li>
+    <li><a href="/profil">Profil</a></li>
+    <li><a href="/bibliotheque">Vos Jeux</a></li>
+    <li><a href="/partage">Partage</a></li>
+    <li><a href="/state">Statistique</a></li>
+    <li><a href="/commente">Notation Jeux</a></li>
+    <li><a href="/gestion_payement">Gestion payement</a></li>
+    <li><a href="/ami"> Vos amis</a></li>
+    <li><a href="deconnexion">Se déconnecter</a></li>
+  </ul>
+
+  <div class="main-content">
+    {% if jeu != [] %}
+    <h1>Les jeux partagés par des amis</h1>
+    {% for onejeu in jeu %}
+      <a href="{{ url_for('display_jeux', thisjeu=onejeu) }}" class="nounderline">
+        <div class="game-container">
+          <h1>Votre ami {{ amis[loop.index0] }} vous a partagé :</h1>
+          <h2>{{ onejeu.titre }}</h2>
+          <img src="{{ url_for('static', filename=onejeu + '.jpg') }}" alt="{{ onejeu.titre }}" class="center">
+        </div>
+      </a>
+    {% endfor %}
+    {% else %}
+    <p>Aucun jeu partagé par des amis.</p>
+    {% endif %}
+
+    {% if jeupartoi != [] %}
+    <h1>Jeux que tu partages</h1>
+    {% for onejeu in jeupartoi %}
+      <a href="{{ url_for('display_jeux', thisjeu=onejeu) }}" class="nounderline">
+        <div class="game-container">
+          <h1>Vous avez partagé ce jeu à {{ amispartage[loop.index0] }} :</h1>
+          <h2>{{ onejeu.titre }}</h2>
+          <img src="{{ url_for('static', filename=onejeu + '.jpg') }}" alt="{{ onejeu.titre }}" class="center">
+        </div>
+      </a>
+    {% endfor %}
+    {% else %}
+    <h1>Vous n'avez partagé aucun jeu.</h1>
+    {% endif %}
+  </div>
+</body>
+</html>
