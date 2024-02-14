@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    a {
+       color:rgb(248, 235, 209);
+       text-decoration:none; 
+     }
+ 
+     a:visited {
+       color:rgb(248, 235, 209);
+       text-decoration:none; 
+     }
+ 
+     .center {
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
+       width: 50%;
+     }
+ 
+     a.nounderline {
+       text-decoration: none;
+       color :rgb(248, 235, 209);
+     }
+ 
+     body {
+       margin: 0;
+     }
+ 
+     ul {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+       width: 15%;
+       background-color: grey;
+       float: left;
+       height: 100%;
+       overflow: auto;
+     }
+ 
+     li a {
+       display: block;
+       color: rgb(248, 235, 209);
+       padding: 8px 16px;
+       text-decoration: none;
+     }
+ 
+     li a.active {
+       background-color: #83431d;
+       color: rgb(248, 235, 209);
+     }
+ 
+     li a:hover:not(.active) {
+       background-color: #b75e29;
+       color: white;
+     }
+ 
+     .main-content {
+       padding: 1px 16px;
+       box-sizing: border-box;
+       display: flex;
+       flex-wrap: wrap; /* Ajout de flex-wrap: wrap; */
+       justify-content: space-around; /* Ajout de justify-content: space-around; pour l'espacement automatique */
+     }
+     
+     .game-container {
+       width: 300px;
+       height: 400px;
+       margin: 10px;
+       border: 1px solid #b75e29;
+       text-align: center;
+       background-color: rgb(30, 30, 37);
+       display: flex;
+       flex-direction: column;
+     }
+ 
+ </style>
+ 
+  <script>
+    function toggleReadOnly(elementId) {
+      var element = document.getElementById(elementId);
+      element.readOnly = !element.readOnly;
+    }
+  </script>
+  
+  <title>Compte</title>
+</head>
+
+<body style="background-color: #2b7e82;">
+
+  <header>
+    <h1 style="text-align: center;">Profil</h1>
+  </header>
+
+  <ul>
+    <li><a class="active" href="/home">Home</a></li>
+    <li><a href="/profil">Profil</a></li>
+    <li><a href="/bibliotheque">Vos Jeux</a></li>
+    <li><a href="/partage">Partage</a></li>
+    <li><a href="/state">Statistique</a></li>
+    <li><a href="/commente">Notation Jeux</a></li>
+    <li><a href="/gestion_payement">Gestion payement</a></li>
+    <li><a href="/ami"> Vos amis</a></li>
+    <li><a href="deconnexion">Se déconnecter</a></li>
+  </ul>
+
+  <div class="main-content">
+    <p> Le pseudo existe deja</p>
+    <form method="post" action="{{ url_for('profil_modification') }}">
+      <p>
+        <label for="new_pseudo"> Pseudo:</label><br>
+        <input type="text" id="new_pseudo" name="new_pseudo" value="{{joueur_info[0]}}" required readonly>
+        <button type="button" onclick="toggleReadOnly('new_pseudo')">Modifier</button>
+        <br>
+  
+        <label for="new_nom"> Nom:</label><br>
+        <input type="text" id="new_nom" name="new_nom" value="{{joueur_info[1]}}"required readonly>
+        <button type="button" onclick="toggleReadOnly('new_nom')">Modifier</button>
+        <br>
+  
+        <label for="new_email">Email:</label><br>
+        <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" id="new_email" name="new_email" value="{{joueur_info[2]}}"  required readonly>
+        <button type="button" onclick="toggleReadOnly('new_email')">Modifier</button>
+
+
+        <br>
+  
+        <label for="new_date_naissance">Date de naissance:</label><br>
+        <input type="date" id="new_date_naissance" name="new_date_naissance" value="{{joueur_info[3]}}" max="{{datemin}}"  min="{{datemax}}"  required readonly>
+        <button type="button" onclick="toggleReadOnly('new_date_naissance')">Modifier</button>
+        <br>
+
+        <label for="new_mot_de_pass">Mot de passe:</label><br>
+        <input type="password" id="new_mot_de_pass" name="motdepasse" value= "None"pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/" title="Le mot de passe doit contenir au moins 12 caractères, une minuscule, une majuscule, un chiffre et un caractère spécial" placeholder="Nouveau mot_de_pass" minlength="12" readonly>
+        <button type="button" onclick="toggleReadOnly('new_mot_de_pass')">Modifier</button>
+        <br>
+        
+      </p>
+      <p><input type="submit" value="Valider"></p>
+    </form>
+  </div>
+  
+
+</body>
+</html>

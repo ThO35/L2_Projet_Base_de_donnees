@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    h2 {
+      color :rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    p {
+      color : black;
+    }
+
+    a {
+      color:black;
+      text-decoration:none; 
+    }
+
+    a:visited {
+      color:rgb(248, 235, 209);
+      text-decoration:none; 
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    a.nounderline {
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 15%;
+      background-color: grey;
+      float: left;
+      height: 100%;
+      overflow: auto;
+    }
+
+    li a {
+      display: block;
+      color: rgb(248, 235, 209);
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    li a.active {
+      background-color: #83431d;
+      color: rgb(248, 235, 209);;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #b75e29;
+      color: rgb(248, 235, 209);;
+    }
+
+    /* Ajout d'un style pour le conteneur principal */
+    .main-content {
+      margin-left: 17%;
+      padding: 1px 16px;
+      height: 100%;
+      box-sizing: border-box; /* Ajout de cette propriété pour inclure le padding dans la hauteur */
+    }
+
+
+  </style>
+  <title>Compte</title>
+</head>
+
+<body style="background-color: #2b7e82;">
+
+  <header style = "display:flex; align-items:center; justify-content:space-between; height:9em; margin-top:1.5em; margin-bottom:3em; margin-right:2em;">
+    <a href="/" style = "height:100%;"><img src = "{{url_for('static', filename = 'logo.png')}}" style = "height : 100%;" alt = "Logo Nuage"></a>
+    <a href="/"><h1 style="font-size:500%; display:inline; color:black;">NUAGE</h1></a>
+    <a href="/compte" style = "text-decoration:none; font-size:300%;">PROFIL</a>
+  </header>
+
+  <ul>
+    <li><a class="active" href="/home">Home</a></li>
+    <li><a href="/profil">Profil</a></li>
+    <li><a href="/bibliotheque">Vos Jeux</a></li>
+    <li><a href="/partage">Partage</a></li>
+    <li><a href="/state">Statistique</a></li>
+    <li><a href="/commente">Notation Jeux</a></li>
+    <li><a href="/gestion_payement">Gestion payement</a></li>
+    <li><a href="/ami"> Vos amis</a></li>
+    <li><a href="deconnexion">Se déconnecter</a></li>
+  </ul>
+
+
+  <div class="main-content">
+    <h2>Vos amis</h2>
+    {% if ami %}
+      {% for ami_name in ami %}
+        <a>{{ ami_name }}</a><br>
+      {% endfor %}
+    {% else %}
+      <a>Vous n'avez pas d'amis, c'est triste.</a>
+    {% endif %}
+    
+    <h2>Amis possibles</h2>
+    {% if pseudo %}
+    <form method="post" action="{{ url_for('ajouter_ami') }}">
+      <select class="amis" name="amis" required>
+        <option value="Demander en amis">--Demander en ami--</option>
+        {% for future in pseudo %}
+          <option value="{{ future }}">{{ future }}</option>
+        {% endfor %}
+      </select>
+      <input type="submit" value="Nouvel ami !!"><br>
+    </form>
+    {% else %}
+    <a>Vous avez tous les utilisateur en amis</a>
+    {% endif %}
+
+    <h2>Supprimer un rat </h2>
+      {% if rat %}
+      <form method="post" action="{{ url_for('supprimer_ami') }}">
+        <select class="rat" name="rat" required>
+          <option value="Supprimer">--Supprimer un ami--</option>
+          {% for i in rat %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Supprimer"><br>
+      </form>
+      {% else %}
+      <a>Vous n'avez plus d'amis</a>
+      {% endif %}
+  </div>
+</body>
+
+</html>
